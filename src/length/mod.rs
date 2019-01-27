@@ -1,6 +1,9 @@
-use crate::defaults::Float;
+use crate::defaults::{Float, RoundTo};
 use std::ops::{Add, AddAssign, Sub, SubAssign};
+#[cfg(test)]
+mod test;
 pub mod units;
+
 use units::si::*;
 use units::Unit;
 #[derive(Clone, Copy)]
@@ -28,26 +31,48 @@ impl Dim {
     pub fn get_val(&self) -> Float {
         self.val
     }
+
     /// Returns the value stored in the specified unit (without mutating)
     pub fn get_val_as(&self, unit: &'static Unit) -> Float {
         Dim::convert(self.val, self.unit, unit)
     }
-    /// Returns the current value, formatted in the following manner:
-    /// If plural: `1.5 meters`
-    /// If singular, `1 meter`
-    /// TODO: specify decimal points
-    pub fn display_abbr(&self, precision: u8) -> String {
-        format!("{}{}", self.get_val(), self.unit.abbr)
+
+    /// The value is rounded to the number of decimals (and will show trailing `0`)
+    /// value = 1.5, decimals = 2, unit = "METER"; result = `1.50m`
+    pub fn display_abbr(&self, decimals: usize) -> String {
+        let val = self.val.round_to(decimals);
+        format!("{:.*}{}", decimals, val, self.unit.abbr)
     }
-    /// If plural: `1.5 meters`
+
+    /// Displays the value with the appropriate singular or plural name after it
+    /// The value is rounded to the number of decimals (and will show trailing `0`)
+    /// If plural: `1.5 meters` or `0.75 meters`
     /// If singular, `1 meter`
-    /// TODO: specify decimal points
-    pub fn display_full(&self, precision: u8) -> String {
-        if self.val == 1.0 {
-            format!("{} {}", self.get_val(), self.unit.singular)
+    pub fn display(&self, decimals: usize) -> String {
+        let val = self.val.round_to(decimals);
+        if val == 1.0 {
+            self.display_singular(decimals)
         } else {
-            format!("{} {}", self.get_val(), self.unit.plural)
+            self.display_plural(decimals)
         }
+    }
+
+    /// Displays the value with the plural name after it (and a space between).
+    /// The value is rounded to the number of decimals (and will show trailing `0`)
+    /// The plurality of the value is not considered (see Dim.display(decimals)).
+    /// EX: `1.0 meters`, `1.5 meters`
+    pub fn display_plural(&self, decimals: usize) -> String {
+        let val = self.val.round_to(decimals);
+        format!("{:.*} {}", decimals, val, self.unit.plural)
+    }
+
+    /// Displays the value with the singular name after it (and a space between).
+    /// The value is rounded to the number of decimals (and will show trailing `0`)
+    /// The plurality of the value is not considered (see Dim.display(decimals)).
+    /// EX: `1.0 meter`, `1.5 meter`
+    pub fn display_singular(&self, decimals: usize) -> String {
+        let val = self.val.round_to(decimals);
+        format!("{:.*} {}", decimals, val, self.unit.singular)
     }
 }
 // Setters here
@@ -108,42 +133,5 @@ impl SubAssign for Dim {
     fn sub_assign(&mut self, other: Dim) {
         // Simply use add_other
         self.subtract_other(other);
-    }
-}
-// Move on to the tests
-#[cfg(test)]
-mod test {
-    use super::Dim;
-    use super::*;
-    #[test]
-    fn test_metric() {
-        // Start out with a basic number
-        let mut first = Dim::new(0.5, &METER);
-        // Ensure the most basic thing; that it actually is the same
-        assert_eq!(first.get_val(), 0.5);
-        // Create some kilometers
-        let second = Dim::new(0.75, &KILOMETER);
-        assert_eq!(second.get_val_as(&METER), 750.0);
-        assert_eq!(second.get_val_as(&CENTIMETER), 75000.0);
-        assert_eq!(second.get_val_as(&MILLIMETER), 750000.0);
-
-        // Add some kilometers to it
-        first += second;
-        assert_eq!(first.get_val(), 750.50);
-        // subtract it back out
-        first -= second;
-        assert_eq!(first.get_val(), 0.5);
-        // Create one from millimeter
-        let third = Dim::new(17.3, &MILLIMETER);
-        assert_eq!(third.get_val_as(&METER), 0.0173);
-        assert_eq!(third.get_val_as(&CENTIMETER), 1.73);
-        assert_eq!(third.get_val_as(&MILLIMETER), 17.3);
-
-        // Add to get a new value
-        let dim = second + third;
-        assert_eq!(dim.get_val(), 0.7500173);
-        let dim = second - third;
-        // Subtract, as well
-        assert_eq!(dim.get_val(), 0.7499827);
     }
 }
