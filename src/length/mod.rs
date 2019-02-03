@@ -9,6 +9,11 @@ use units::Unit;
 #[derive(Clone, Copy)]
 /// A struct to store a floating point number, and a unit
 /// The benefit from this is conversion safety and various methods
+///
+/// **IMPORTANT**:
+///
+/// This is `Clone` and `Copy`.  
+/// Be careful, as after a move, the two instances are no longer tied.
 pub struct Dim {
     val: Float,
     unit: &'static Unit,
@@ -36,14 +41,16 @@ impl Dim {
     pub fn get_val_as(&self, unit: &'static Unit) -> Float {
         Dim::convert(self.val, self.unit, unit)
     }
+}
 
+// Various display functions here
+impl Dim {
     /// The value is rounded to the number of decimals (and will show trailing `0`)
     /// value = 1.5, decimals = 2, unit = "METER"; result = `1.50m`
     pub fn display_abbr(&self, decimals: usize) -> String {
         let val = self.val.round_to(decimals);
         format!("{:.*}{}", decimals, val, self.unit.abbr)
     }
-
     /// Displays the value with the appropriate singular or plural name after it
     /// The value is rounded to the number of decimals (and will show trailing `0`)
     /// If plural: `1.5 meters` or `0.75 meters`
@@ -88,14 +95,15 @@ impl Dim {
 // Operators here
 impl Dim {
     /// Adds the other value to this one
-    pub fn add_other(&mut self, other: Dim) {
+    pub fn add_other(&mut self, other: &Dim) {
         self.val += other.get_val_as(self.unit);
     }
     /// Subtracts the other value from this one
-    pub fn subtract_other(&mut self, other: Dim) {
+    pub fn subtract_other(&mut self, other: &Dim) {
         self.val -= other.get_val_as(self.unit);
     }
 }
+
 // Implement the various operators
 impl Add for Dim {
     type Output = Dim;
@@ -110,6 +118,7 @@ impl Add for Dim {
         }
     }
 }
+
 impl Sub for Dim {
     type Output = Dim;
     fn sub(self, other: Dim) -> Dim {
@@ -123,15 +132,17 @@ impl Sub for Dim {
         }
     }
 }
+
 impl AddAssign for Dim {
     fn add_assign(&mut self, other: Dim) {
         // Simply use add_other
-        self.add_other(other);
+        self.add_other(&other);
     }
 }
+
 impl SubAssign for Dim {
     fn sub_assign(&mut self, other: Dim) {
         // Simply use add_other
-        self.subtract_other(other);
+        self.subtract_other(&other);
     }
 }
