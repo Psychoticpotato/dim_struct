@@ -1,5 +1,7 @@
 pub mod common;
 pub mod length;
+#[macro_use]
+extern crate lazy_static;
 #[cfg(test)]
 mod tests {
     #[test]

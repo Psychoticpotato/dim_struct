@@ -1,3 +1,3 @@
 mod float;
-mod serial;
+pub mod serial;
 pub use float::{Float, RoundTo};
