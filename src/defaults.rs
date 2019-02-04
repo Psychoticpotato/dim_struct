@@ -22,12 +22,20 @@ mod test {
     #[test]
     fn test_round() {
         let val: Float = 125.0;
-        assert_eq!(val.round_to(2), 125.0);
         assert_eq!(val.round_to(0), 125.0);
+        assert_eq!(val.round_to(1), 125.0);
+        assert_eq!(val.round_to(2), 125.0);
         let val: Float = 125.1250;
         assert_eq!(val.round_to(0), 125.0);
         assert_eq!(val.round_to(1), 125.1);
         assert_eq!(val.round_to(2), 125.13);
         assert_eq!(val.round_to(3), 125.125);
+        let val: Float = 0.99949;
+        assert_eq!(val.round_to(0), 1.0);
+        assert_eq!(val.round_to(1), 1.0);
+        assert_eq!(val.round_to(2), 1.0);
+        assert_eq!(val.round_to(3), 0.999);
+        assert_eq!(val.round_to(4), 0.9995);
+        assert_eq!(val.round_to(5), 0.99949);
     }
 }
