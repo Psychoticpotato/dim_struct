@@ -1,4 +1,4 @@
-use crate::defaults::Float;
+use crate::common::Float;
 pub mod si;
 /// A struct to hold a specific unit
 pub struct Unit {

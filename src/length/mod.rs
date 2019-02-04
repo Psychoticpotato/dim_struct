@@ -1,4 +1,4 @@
-use crate::defaults::{Float, RoundTo};
+use crate::common::{Float, RoundTo};
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 #[cfg(test)]
 mod test;
