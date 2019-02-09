@@ -1,5 +1,8 @@
 use crate::common::Float;
+/// Module with SI units (Meter and such)
 pub mod si;
+/// Module with the United States customary units
+pub mod us;
 /// A struct to hold a specific unit
 pub struct Unit {
     /// The abbreviation for this unit
