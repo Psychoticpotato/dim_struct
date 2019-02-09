@@ -1,7 +1,9 @@
 use crate::common::Float;
-/// Module with SI units (Meter and such)
+/// Module with SI units (Metre and such)
 pub mod si;
-/// Module with the United States customary units
+/// Module with American spellings of SI units (Meter and such)
+pub mod si_us;
+/// Module with the United States customary units (Inche and such)
 pub mod us;
 /// A struct to hold a specific unit
 pub struct Unit {
@@ -11,6 +13,6 @@ pub struct Unit {
     pub singular: &'static str,
     /// Plural name of this unit
     pub plural: &'static str,
-    /// How many of this unit does it take to make a meter (base unit)
-    pub in_meter: Float,
+    /// How many of this unit does it take to make a metre (base unit)
+    pub in_metre: Float,
 }

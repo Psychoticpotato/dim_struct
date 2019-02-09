@@ -26,7 +26,7 @@ impl Dim {
     }
     /// Convert the value from and to the given units
     pub fn convert(val: Float, from: &'static Unit, to: &'static Unit) -> Float {
-        val / from.in_meter * to.in_meter
+        val / from.in_metre * to.in_metre
     }
 }
 
@@ -46,15 +46,15 @@ impl Dim {
 // Various display functions here
 impl Dim {
     /// The value is rounded to the number of decimals (and will show trailing `0`)
-    /// value = 1.5, decimals = 2, unit = "METER"; result = `1.50m`
+    /// value = 1.5, decimals = 2, unit = "METRE"; result = `1.50m`
     pub fn display_abbr(&self, decimals: usize) -> String {
         let val = self.val.round_to(decimals);
         format!("{:.*}{}", decimals, val, self.unit.abbr)
     }
     /// Displays the value with the appropriate singular or plural name after it
     /// The value is rounded to the number of decimals (and will show trailing `0`)
-    /// If plural: `1.5 meters` or `0.75 meters`
-    /// If singular, `1 meter`
+    /// If plural: `1.5 metres` or `0.75 metres`
+    /// If singular, `1 metre`
     pub fn display(&self, decimals: usize) -> String {
         let val = self.val.round_to(decimals);
         if val == 1.0 {
@@ -67,7 +67,7 @@ impl Dim {
     /// Displays the value with the plural name after it (and a space between).
     /// The value is rounded to the number of decimals (and will show trailing `0`)
     /// The plurality of the value is not considered (see Dim.display(decimals)).
-    /// EX: `1.0 meters`, `1.5 meters`
+    /// EX: `1.0 metres`, `1.5 metres`
     pub fn display_plural(&self, decimals: usize) -> String {
         let val = self.val.round_to(decimals);
         format!("{:.*} {}", decimals, val, self.unit.plural)
@@ -76,7 +76,7 @@ impl Dim {
     /// Displays the value with the singular name after it (and a space between).
     /// The value is rounded to the number of decimals (and will show trailing `0`)
     /// The plurality of the value is not considered (see Dim.display(decimals)).
-    /// EX: `1.0 meter`, `1.5 meter`
+    /// EX: `1.0 metre`, `1.5 metre`
     pub fn display_singular(&self, decimals: usize) -> String {
         let val = self.val.round_to(decimals);
         format!("{:.*} {}", decimals, val, self.unit.singular)
@@ -108,10 +108,10 @@ impl Dim {
 impl Add for Dim {
     type Output = Dim;
     fn add(self, other: Dim) -> Dim {
-        // Get these values as meter
-        let val = self.get_val_as(&METER) + other.get_val_as(&METER);
+        // Get these values as metre
+        let val = self.get_val_as(&METRE) + other.get_val_as(&METRE);
         // Adjust them to the first value's unit
-        let val = Dim::convert(val, &METER, self.unit);
+        let val = Dim::convert(val, &METRE, self.unit);
         Dim {
             val,
             unit: self.unit,
@@ -122,10 +122,10 @@ impl Add for Dim {
 impl Sub for Dim {
     type Output = Dim;
     fn sub(self, other: Dim) -> Dim {
-        // Get these values as meter
-        let val = self.get_val_as(&METER) - other.get_val_as(&METER);
+        // Get these values as metre
+        let val = self.get_val_as(&METRE) - other.get_val_as(&METRE);
         // Adjust them to the first value's unit
-        let val = Dim::convert(val, &METER, self.unit);
+        let val = Dim::convert(val, &METRE, self.unit);
         Dim {
             val,
             unit: self.unit,

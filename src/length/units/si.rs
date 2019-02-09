@@ -1,29 +1,29 @@
 use crate::length::units::Unit;
 
-pub static METER: Unit = Unit {
-    abbr: "m",
-    singular: "meter",
-    plural: "meters",
-    in_meter: 1.0,
-};
-
-pub static CENTIMETER: Unit = Unit {
+pub static CENTIMETRE: Unit = Unit {
     abbr: "cm",
-    singular: "centimeter",
-    plural: "centimeters",
-    in_meter: 100.0,
+    singular: "centimetre",
+    plural: "centimetres",
+    in_metre: 100.0,
 };
 
-pub static MILLIMETER: Unit = Unit {
+pub static METRE: Unit = Unit {
+    abbr: "m",
+    singular: "metre",
+    plural: "metres",
+    in_metre: 1.0,
+};
+
+pub static MILLIMETRE: Unit = Unit {
     abbr: "mm",
-    singular: "millimeter",
-    plural: "millimeters",
-    in_meter: 1000.0,
+    singular: "millimetre",
+    plural: "millimetres",
+    in_metre: 1000.0,
 };
 
-pub static KILOMETER: Unit = Unit {
+pub static KILOMETRE: Unit = Unit {
     abbr: "km",
-    singular: "kilometer",
-    plural: "kilometers",
-    in_meter: 0.001,
+    singular: "kilometre",
+    plural: "kilometres",
+    in_metre: 0.001,
 };
