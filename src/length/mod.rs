@@ -1,11 +1,10 @@
-use crate::common::{Float, RoundTo};
+use crate::common::{Float, RoundTo, Unit};
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 #[cfg(test)]
 mod test;
 pub mod units;
 
 use units::si::*;
-use units::Unit;
 #[derive(Clone, Copy)]
 /// A struct to store a floating point number, and a unit
 /// The benefit from this is conversion safety and various methods
@@ -13,12 +12,14 @@ use units::Unit;
 /// **IMPORTANT**:
 ///
 /// This is `Clone` and `Copy`.  
+///
 /// Be careful, as after a move, the two instances are no longer tied.
+/// TODO: Should this be Clone and Copy or not?
 pub struct Dim {
     val: Float,
     unit: &'static Unit,
 }
-/// Begin with static functions
+// Begin with static functions
 impl Dim {
     /// Create a new Dimension with the given value and unit
     pub fn new(val: Float, unit: &'static Unit) -> Dim {
@@ -26,7 +27,7 @@ impl Dim {
     }
     /// Convert the value from and to the given units
     pub fn convert(val: Float, from: &'static Unit, to: &'static Unit) -> Float {
-        val / from.in_metre * to.in_metre
+        val / from.in_base * to.in_base
     }
 }
 
