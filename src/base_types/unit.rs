@@ -1,13 +1,12 @@
-use super::Float;
-
-/// A struct to hold a specific unit
-pub struct Unit {
+use crate::common::Float;
+/// The trait from which all units must derive
+pub trait UnitTrait: Sized {
     /// The abbreviation for this unit
-    pub abbr: &'static str,
+    fn get_abbr(&self) -> &'static str;
     /// Full name of this unit (singular)
-    pub singular: &'static str,
+    fn get_singular(&self) -> &'static str;
     /// Plural name of this unit
-    pub plural: &'static str,
+    fn get_plural(&self) -> &'static str;
     /// How many of this unit does it take to make a base unit.
     ///
     /// Base Units:
@@ -16,5 +15,5 @@ pub struct Unit {
     /// - volume: litre
     /// - mass: gram
     /// - TODO: finish out these
-    pub in_base: Float,
+    fn in_base(&self) -> Float;
 }
