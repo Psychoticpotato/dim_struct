@@ -1,29 +1,29 @@
-use crate::common::Unit;
+use super::LengthUnit;
 
-pub static CENTIMETRE: Unit = Unit {
+pub static CENTIMETRE: LengthUnit = LengthUnit {
     abbr: "cm",
     singular: "centimetre",
     plural: "centimetres",
-    in_base: 100.0,
+    in_metre: 100.0,
 };
 
-pub static METRE: Unit = Unit {
+pub static METRE: LengthUnit = LengthUnit {
     abbr: "m",
     singular: "metre",
     plural: "metres",
-    in_base: 1.0,
+    in_metre: 1.0,
 };
 
-pub static MILLIMETRE: Unit = Unit {
+pub static MILLIMETRE: LengthUnit = LengthUnit {
     abbr: "mm",
     singular: "millimetre",
     plural: "millimetres",
-    in_base: 1000.0,
+    in_metre: 1000.0,
 };
 
-pub static KILOMETRE: Unit = Unit {
+pub static KILOMETRE: LengthUnit = LengthUnit {
     abbr: "km",
     singular: "kilometre",
     plural: "kilometres",
-    in_base: 0.001,
+    in_metre: 0.001,
 };

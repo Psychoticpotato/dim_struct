@@ -1,29 +1,29 @@
-use crate::common::Unit;
+use super::LengthUnit;
 
-pub static INCH: Unit = Unit {
+pub static INCH: LengthUnit = LengthUnit {
     abbr: "in",
     singular: "inch",
     plural: "inches",
-    in_base: 39.37007874,
+    in_metre: 39.37007874,
 };
 
-pub static FOOT: Unit = Unit {
+pub static FOOT: LengthUnit = LengthUnit {
     abbr: "ft",
     singular: "foot",
     plural: "feet",
-    in_base: 3.280839895,
+    in_metre: 3.280839895,
 };
 
-pub static YARD: Unit = Unit {
+pub static YARD: LengthUnit = LengthUnit {
     abbr: "yd",
     singular: "yard",
     plural: "yards",
-    in_base: 1.093613298,
+    in_metre: 1.093613298,
 };
 
-pub static MILE: Unit = Unit {
+pub static MILE: LengthUnit = LengthUnit {
     abbr: "mi",
     singular: "mile",
     plural: "miles",
-    in_base: 0.000621371,
+    in_metre: 0.000621371,
 };
