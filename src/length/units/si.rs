@@ -1,4 +1,4 @@
-use super::LengthUnit;
+use super::{LengthUnit, LengthUnitList};
 
 pub static MILLIMETRE: LengthUnit = LengthUnit {
     abbr: "mm",
@@ -34,3 +34,10 @@ pub static KILOMETRE: LengthUnit = LengthUnit {
     plural: "kilometres",
     in_metre: 0.001,
 };
+
+lazy_static! {
+    pub static ref SI_LIST: LengthUnitList = LengthUnitList {
+        title: "",
+        units: vec!(&MILLIMETRE, &CENTIMETRE, &DECIMETRE, &METRE, &KILOMETRE,),
+    };
+}

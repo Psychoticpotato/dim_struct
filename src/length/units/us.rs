@@ -1,4 +1,4 @@
-use super::LengthUnit;
+use super::{LengthUnit, LengthUnitList};
 
 pub static INCH: LengthUnit = LengthUnit {
     abbr: "in",
@@ -27,3 +27,13 @@ pub static MILE: LengthUnit = LengthUnit {
     plural: "miles",
     in_metre: 0.000621371,
 };
+
+lazy_static! {
+    /// The list of US Length units are stored here
+    ///
+    /// If you need a custom list, tough luck
+    pub static ref US_LENGTH_LIST: LengthUnitList = LengthUnitList {
+        title: "",
+        units: vec!(&INCH, &FOOT, &YARD, &MILE,),
+    };
+}

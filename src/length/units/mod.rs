@@ -1,5 +1,6 @@
-use crate::base_types::UnitTrait;
-use crate::common::Float;
+use crate::unit_creation::*;
+#[cfg(test)]
+mod test;
 
 /// Module with SI units (Metre and such)
 pub mod si;
@@ -31,5 +32,24 @@ impl UnitTrait for LengthUnit {
     }
     fn in_base(&self) -> Float {
         self.in_metre
+    }
+}
+
+pub struct LengthUnitList {
+    /// Title of these units
+    title: &'static str,
+    /// The list of stored units
+    units: Vec<&'static LengthUnit>,
+}
+
+impl UnitListTrait<LengthUnit> for LengthUnitList {
+    fn get_title(&self) -> &str {
+        self.title
+    }
+    fn get_list(&self) -> &Vec<&'static LengthUnit> {
+        &self.units
+    }
+    fn add_unit(&mut self, new_unit: &'static LengthUnit) {
+        self.units.push(new_unit)
     }
 }
