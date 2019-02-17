@@ -1,4 +1,4 @@
-use crate::length::units::LengthUnit;
+use crate::length::units::{LengthUnit, LengthUnitList};
 use crate::measure_creation::*;
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 
@@ -18,6 +18,18 @@ pub struct Length {
 impl Length {
     pub fn new(val: Float, unit: &'static LengthUnit) -> Length {
         Length { val, unit }
+    }
+    /// Parses the literal string for a length (ex: `12m`).
+    ///
+    /// Returns a Length struct if the value was parsed correctly
+    pub fn from_literal(system: LengthUnitList, val: &str) -> Option<Length> {
+        // Parse the string
+        let res = system.parse_str(val)?;
+        // If found, return a new Length
+        Some(Length {
+            val: res.0,
+            unit: res.1,
+        })
     }
 }
 // Implement the measurement traits

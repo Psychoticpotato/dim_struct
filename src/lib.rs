@@ -17,7 +17,7 @@ pub mod preamble {
 /// Import this to create a new Measure type
 pub mod measure_creation {
     pub use super::base_types::{
-        MeasureConvert, MeasureDisplay, MeasureInternalSetters, MeasureTrait,
+        MeasureConvert, MeasureDisplay, MeasureInternalSetters, MeasureTrait, UnitListTrait,
     };
     pub use super::common::{Float, RoundTo};
 }
