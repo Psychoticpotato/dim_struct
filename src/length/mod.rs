@@ -1,6 +1,5 @@
-use crate::base_types::*;
-use crate::common::Float;
 use crate::length::units::LengthUnit;
+use crate::measure_creation::*;
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 
 #[cfg(test)]

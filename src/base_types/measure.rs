@@ -1,5 +1,6 @@
 use crate::base_types::UnitTrait;
 use crate::common::{Float, RoundTo};
+
 /// The trait from which all measurement units are derived
 pub trait MeasureTrait {
     /// The stored unit is of this type

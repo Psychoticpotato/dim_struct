@@ -1,7 +1,7 @@
 // Move on to the tests
 use super::units::si::*;
 use super::Length;
-use crate::base_types::*;
+use crate::preamble::*;
 
 #[test]
 fn test_add_sub() {
