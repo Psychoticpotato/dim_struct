@@ -1,5 +1,12 @@
 use super::LengthUnit;
 
+pub static MILLIMETRE: LengthUnit = LengthUnit {
+    abbr: "mm",
+    singular: "millimetre",
+    plural: "millimetres",
+    in_metre: 1000.0,
+};
+
 pub static CENTIMETRE: LengthUnit = LengthUnit {
     abbr: "cm",
     singular: "centimetre",
@@ -7,18 +14,18 @@ pub static CENTIMETRE: LengthUnit = LengthUnit {
     in_metre: 100.0,
 };
 
+pub static DECIMETRE: LengthUnit = LengthUnit {
+    abbr: "dm",
+    singular: "decimetre",
+    plural: "decimetres",
+    in_metre: 10.0,
+};
+
 pub static METRE: LengthUnit = LengthUnit {
     abbr: "m",
     singular: "metre",
     plural: "metres",
     in_metre: 1.0,
-};
-
-pub static MILLIMETRE: LengthUnit = LengthUnit {
-    abbr: "mm",
-    singular: "millimetre",
-    plural: "millimetres",
-    in_metre: 1000.0,
 };
 
 pub static KILOMETRE: LengthUnit = LengthUnit {
