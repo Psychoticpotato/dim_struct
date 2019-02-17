@@ -5,7 +5,7 @@ lazy_static! {
     /// Capture groups are:
     /// 1. The value itself
     /// 2. The unit
-    pub static ref SERIAL_REGEX: Regex = Regex::new(r"(?i)(\d+(?:\.\d*)?) *([a-z]+)").unwrap();
+    pub static ref SERIAL_REGEX: Regex = Regex::new(r"(?i)^ *([+-]? *(?:\d*\.?\d+)|(?:\d+\.?\d*)) *([a-z]+) *$").unwrap();
 }
 
 #[cfg(test)]
@@ -33,6 +33,24 @@ mod test {
                 val: String::from("124. AsDf"),
                 num: String::from("124."),
                 unit: String::from("AsDf"),
+            },
+            // Without a trailing zero
+            TestVals {
+                val: String::from(".75 PieFace"),
+                num: String::from(".75"),
+                unit: String::from("PieFace"),
+            },
+            // With the leading plus
+            TestVals {
+                val: String::from("+ .85 WithPlus"),
+                num: String::from("+ .85"),
+                unit: String::from("WithPlus"),
+            },
+            // With a leading negative
+            TestVals {
+                val: String::from("- .85 WithMinus"),
+                num: String::from("- .85"),
+                unit: String::from("WithMinus"),
             },
             TestVals {
                 val: String::from("0.25 AsDf"),
