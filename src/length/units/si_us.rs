@@ -37,7 +37,7 @@ pub static KILOMETER: LengthUnit = LengthUnit {
 
 lazy_static! {
     pub static ref SI_US_LIST: LengthUnitList = LengthUnitList {
-        title: "",
+        title: "SI_US",
         units: vec!(&MILLIMETER, &CENTIMETER, &DECIMETER, &METER, &KILOMETER,),
     };
 }

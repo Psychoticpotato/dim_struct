@@ -33,7 +33,7 @@ lazy_static! {
     ///
     /// If you need a custom list, tough luck
     pub static ref US_LENGTH_LIST: LengthUnitList = LengthUnitList {
-        title: "",
+        title: "US",
         units: vec!(&INCH, &FOOT, &YARD, &MILE,),
     };
 }
