@@ -41,7 +41,11 @@ pub trait UnitListTrait<U: UnitTrait> {
         // The resulting unit (if found)
         let result = self.find_in_list(unit_str)?;
         // Parse the number
-        let val = val.parse::<Float>().unwrap();
+        let val = val
+            .replace(" ", "") // Remove the whitespace
+            .parse::<Float>() // Parse into a float
+            .expect(format!("Matched Str:{}", val).as_str()); // Yell if something bad happens
+
         // Return the result (if this point is ever reached)
         Some((val, result))
     }
