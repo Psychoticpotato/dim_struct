@@ -1,7 +1,7 @@
 use crate::common::serial::SERIAL_REGEX;
 use crate::common::Float;
 /// The trait from which all units must derive
-pub trait UnitTrait: Sized {
+pub trait UnitTrait: Sized + PartialEq {
     /// The abbreviation for this unit
     fn get_abbr(&self) -> &'static str;
     /// Full name of this unit (singular)
@@ -26,6 +26,8 @@ pub trait UnitListTrait<U: UnitTrait> {
     fn get_title(&self) -> &str;
     /// Grab the full list of units for this set
     fn get_list(&self) -> &Vec<&'static U>;
+    /// Grab the full list of units for this set
+    fn get_list_mut(&mut self) -> &mut Vec<&'static U>;
     /// Parse the given string and returns:
     /// - The floating point value
     /// - The unit type for this value
@@ -49,6 +51,14 @@ pub trait UnitListTrait<U: UnitTrait> {
         // Return the result (if this point is ever reached)
         Some((val, result))
     }
+    /// Attempts to find the given string in the list.
+    ///
+    /// This can be:
+    /// - Abbreviation
+    /// - Singular
+    /// - Plural
+    ///
+    /// If not found, `None` is returned.
     fn find_in_list(&self, unit_str: &str) -> Option<&'static U> {
         // Loop through each unit
         for unit in self.get_list() {
@@ -64,6 +74,17 @@ pub trait UnitListTrait<U: UnitTrait> {
         // If nothing is found, return that
         None
     }
-    /// Add the given unit to the stored vec
-    fn add_unit(&mut self, new_unit: &'static U);
+    /// Merges the list of Unit Lists with this one.
+    ///
+    /// Anything that evalutes to equal during merge is not added.
+    fn merge_other(&mut self, other: &Vec<&'static U>) {
+        // Grab the list upon which we will operate
+        let list = self.get_list_mut();
+        for entry in other {
+            // If we don't already have this entry, add it
+            if !list.contains(entry) {
+                list.push(entry);
+            }
+        }
+    }
 }
