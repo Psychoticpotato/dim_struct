@@ -1,4 +1,4 @@
-use super::unit::UnitListTrait;
+use super::unit::UnitList;
 use crate::base_types::UnitTrait;
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 
@@ -27,7 +27,7 @@ impl<U: UnitTrait> Measure<'static, U> {
     /// The order of these should not be relied upon.
     ///
     /// Returns a Length struct if the value was parsed correctly
-    pub fn from_literal<L: UnitListTrait<U>>(system: L, val: &str) -> Option<Measure<'static, U>> {
+    pub fn from_literal(system: UnitList<'static, U>, val: &str) -> Option<Measure<'static, U>> {
         // Parse the string
         let res = system.parse_str(val)?;
         // If found, return a new Length

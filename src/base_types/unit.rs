@@ -21,19 +21,35 @@ pub trait UnitTrait: Sized + PartialEq {
 /// A list of units for a particular system.
 ///
 /// This is for something like SI length units, to avoid overlap of abbreviated units.
-pub trait UnitListTrait<U: UnitTrait> {
+pub struct UnitList<'l, U: UnitTrait> {
+    /// Title of these units
+    title: &'static str,
+    /// The list of stored units
+    units: Vec<&'l U>,
+}
+impl<U: UnitTrait> UnitList<'static, U> {
+    /// Generates a new UnitList with the given info
+    pub fn new(title: &'static str, units: Vec<&'static U>) -> Self {
+        Self { title, units }
+    }
     /// Return the title of this set of units
-    fn get_title(&self) -> &str;
+    pub fn get_title(&self) -> &str {
+        self.title
+    }
     /// Grab the full list of units for this set
-    fn get_list(&self) -> &Vec<&'static U>;
+    pub fn get_list(&self) -> &Vec<&'static U> {
+        &self.units
+    }
     /// Grab the full list of units for this set
-    fn get_list_mut(&mut self) -> &mut Vec<&'static U>;
+    pub fn get_list_mut(&mut self) -> &mut Vec<&'static U> {
+        &mut self.units
+    }
     /// Parse the given string and returns:
     /// - The floating point value
     /// - The unit type for this value
     ///
     /// If not properly parsed, returns None
-    fn parse_str(&self, test_val: &str) -> Option<(Float, &'static U)> {
+    pub fn parse_str(&self, test_val: &str) -> Option<(Float, &'static U)> {
         // Grab the capture group
         let captures = SERIAL_REGEX.captures(test_val)?;
         // The value from the unit
@@ -59,7 +75,7 @@ pub trait UnitListTrait<U: UnitTrait> {
     /// - Plural
     ///
     /// If not found, `None` is returned.
-    fn find_in_list(&self, unit_str: &str) -> Option<&'static U> {
+    pub fn find_in_list(&self, unit_str: &str) -> Option<&'static U> {
         // Loop through each unit
         for unit in self.get_list() {
             // If any of these cases is true, we have found the unit
@@ -77,7 +93,7 @@ pub trait UnitListTrait<U: UnitTrait> {
     /// Merges the list of Unit Lists with this one.
     ///
     /// Anything that evalutes to equal during merge is not added.
-    fn merge_other(&mut self, other: &Vec<&'static U>) {
+    pub fn merge_other(&mut self, other: &Vec<&'static U>) {
         // Grab the list upon which we will operate
         let list = self.get_list_mut();
         for entry in other {

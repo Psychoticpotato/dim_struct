@@ -5,7 +5,9 @@ pub mod systems;
 mod test_measure;
 #[cfg(test)]
 mod test_unit;
-
+/// The struct that specifies the unit for a Length entry.
+///
+/// The base unit for Length is `Metre`.
 pub struct LengthUnit {
     /// The abbreviation for this unit
     abbr: &'static str,
@@ -36,24 +38,5 @@ impl std::cmp::PartialEq for LengthUnit {
     fn eq(&self, other: &LengthUnit) -> bool {
         // TODO: What about spellings?
         self.in_metre == other.in_metre
-    }
-}
-
-pub struct LengthUnitList {
-    /// Title of these units
-    title: &'static str,
-    /// The list of stored units
-    units: Vec<&'static LengthUnit>,
-}
-
-impl UnitListTrait<LengthUnit> for LengthUnitList {
-    fn get_title(&self) -> &str {
-        self.title
-    }
-    fn get_list(&self) -> &Vec<&'static LengthUnit> {
-        &self.units
-    }
-    fn get_list_mut(&mut self) -> &mut Vec<&'static LengthUnit> {
-        &mut self.units
     }
 }

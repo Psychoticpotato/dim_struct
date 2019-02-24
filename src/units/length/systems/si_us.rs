@@ -1,5 +1,5 @@
-use super::super::{LengthUnit, LengthUnitList};
-
+use super::super::LengthUnit;
+use crate::unit_creation::UnitList;
 pub static MILLIMETER: LengthUnit = LengthUnit {
     abbr: "mm",
     singular: "millimeter",
@@ -36,8 +36,8 @@ pub static KILOMETER: LengthUnit = LengthUnit {
 };
 
 lazy_static! {
-    pub static ref SI_US_LIST: LengthUnitList = LengthUnitList {
-        title: "SI_US",
-        units: vec!(&MILLIMETER, &CENTIMETER, &DECIMETER, &METER, &KILOMETER,),
-    };
+    pub static ref SI_US_LIST: UnitList<'static, LengthUnit> = UnitList::new(
+        "SI_US",
+        vec!(&MILLIMETER, &CENTIMETER, &DECIMETER, &METER, &KILOMETER,),
+    );
 }

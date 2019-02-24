@@ -1,6 +1,6 @@
 use super::systems::si::*;
 use super::LengthUnit;
-use crate::base_types::{UnitListTrait, UnitTrait};
+use crate::base_types::UnitTrait;
 use crate::common::*;
 #[test]
 fn test_si_list() {

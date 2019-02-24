@@ -1,5 +1,5 @@
-use super::super::{LengthUnit, LengthUnitList};
-
+use super::super::LengthUnit;
+use crate::unit_creation::UnitList;
 pub static INCH: LengthUnit = LengthUnit {
     abbr: "in",
     singular: "inch",
@@ -32,8 +32,8 @@ lazy_static! {
     /// The list of US Length units are stored here
     ///
     /// If you need a custom list, tough luck
-    pub static ref US_LENGTH_LIST: LengthUnitList = LengthUnitList {
-        title: "US",
-        units: vec!(&INCH, &FOOT, &YARD, &MILE,),
-    };
+    pub static ref US_LENGTH_LIST: UnitList<'static, LengthUnit> = UnitList::new (
+        "US",
+        vec!(&INCH, &FOOT, &YARD, &MILE,),
+    );
 }
