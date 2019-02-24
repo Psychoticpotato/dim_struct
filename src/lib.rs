@@ -1,6 +1,6 @@
 mod base_types;
 pub mod common;
-pub mod length;
+pub mod units;
 #[macro_use]
 extern crate lazy_static;
 pub use base_types::Measure;

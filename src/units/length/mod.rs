@@ -1,14 +1,10 @@
 use crate::unit_creation::*;
-/// Module with SI units (Metre and such)
-pub mod si;
-/// Module with American spellings of SI units (Meter and such)
-pub mod si_us;
+/// The different pre-made unit systems for Length
+pub mod systems;
 #[cfg(test)]
 mod test_measure;
 #[cfg(test)]
 mod test_unit;
-/// Module with the United States customary units (Inch and such)
-pub mod us;
 
 pub struct LengthUnit {
     /// The abbreviation for this unit

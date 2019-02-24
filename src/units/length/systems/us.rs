@@ -1,4 +1,4 @@
-use super::{LengthUnit, LengthUnitList};
+use super::super::{LengthUnit, LengthUnitList};
 
 pub static INCH: LengthUnit = LengthUnit {
     abbr: "in",
