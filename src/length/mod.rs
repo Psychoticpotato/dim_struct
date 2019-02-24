@@ -1,93 +1,63 @@
-use crate::length::units::{LengthUnit, LengthUnitList};
-use crate::measure_creation::*;
-use std::ops::{Add, AddAssign, Sub, SubAssign};
-
+use crate::unit_creation::*;
+/// Module with SI units (Metre and such)
+pub mod si;
+/// Module with American spellings of SI units (Meter and such)
+pub mod si_us;
 #[cfg(test)]
-mod test;
-pub mod units;
-#[derive(Copy, Clone)]
-/// Length handles, well, length.
-///
-/// Feet, meters, lightyears, etc.
-pub struct Length {
-    /// The unit of this value
-    unit: &'static LengthUnit,
-    /// The value stored as a float
-    val: Float,
-}
-impl Length {
-    pub fn new(val: Float, unit: &'static LengthUnit) -> Length {
-        Length { val, unit }
-    }
-    /// Parses the literal string for a length (ex: `12m`).
-    ///
-    /// Returns a Length struct if the value was parsed correctly
-    pub fn from_literal(system: LengthUnitList, val: &str) -> Option<Length> {
-        // Parse the string
-        let res = system.parse_str(val)?;
-        // If found, return a new Length
-        Some(Length {
-            val: res.0,
-            unit: res.1,
-        })
-    }
-}
-// Implement the measurement traits
-impl MeasureTrait for Length {
-    type Unit = LengthUnit;
-    fn get_val(&self) -> Float {
-        self.val
-    }
-    fn get_unit(&self) -> &'static LengthUnit {
-        self.unit
-    }
-    fn add_other(&mut self, other: &Length) {
-        self.val += other.get_val_as(self.unit);
-    }
-    fn subtract_other(&mut self, other: &Length) {
-        self.val -= other.get_val_as(self.unit);
-    }
-}
-// Implement the internal setters
-impl MeasureInternalSetters<Length> for Length {
-    fn set_unit_internal(&mut self, unit: &'static LengthUnit) {
-        self.unit = unit;
-    }
-    fn set_val_internal(&mut self, val: Float) {
-        self.val = val;
-    }
-}
-// Implement the conversion traits
-impl MeasureConvert<Length> for Length {}
+mod test_measure;
+#[cfg(test)]
+mod test_unit;
+/// Module with the United States customary units (Inch and such)
+pub mod us;
 
-// Add the operators
-impl Add<Length> for Length {
-    type Output = Length;
-    fn add(self, other: Length) -> Length {
-        let val = self.val + other.get_val_as(self.unit);
-        Length {
-            val,
-            unit: self.unit,
-        }
+pub struct LengthUnit {
+    /// The abbreviation for this unit
+    abbr: &'static str,
+    /// Full name of this unit (singular)
+    singular: &'static str,
+    /// Plural name of this unit
+    plural: &'static str,
+    /// How many of this unit does it take to make a metre
+    in_metre: Float,
+}
+// Implement the UnitTrait
+impl UnitTrait for LengthUnit {
+    fn get_abbr(&self) -> &'static str {
+        self.abbr
+    }
+    fn get_singular(&self) -> &'static str {
+        self.singular
+    }
+    fn get_plural(&self) -> &'static str {
+        self.plural
+    }
+    fn in_base(&self) -> Float {
+        self.in_metre
     }
 }
-impl AddAssign<Length> for Length {
-    fn add_assign(&mut self, other: Length) {
-        self.add_other(&other);
+// Implement the equality operator
+impl std::cmp::PartialEq for LengthUnit {
+    fn eq(&self, other: &LengthUnit) -> bool {
+        // TODO: What about spellings?
+        self.in_metre == other.in_metre
     }
 }
-impl Sub<Length> for Length {
-    type Output = Length;
-    fn sub(self, other: Length) -> Length {
-        let val = self.val - other.get_val_as(self.unit);
-        Length {
-            val,
-            unit: self.unit,
-        }
-    }
+
+pub struct LengthUnitList {
+    /// Title of these units
+    title: &'static str,
+    /// The list of stored units
+    units: Vec<&'static LengthUnit>,
 }
-impl SubAssign<Length> for Length {
-    fn sub_assign(&mut self, other: Length) {
-        self.subtract_other(&other);
+
+impl UnitListTrait<LengthUnit> for LengthUnitList {
+    fn get_title(&self) -> &str {
+        self.title
+    }
+    fn get_list(&self) -> &Vec<&'static LengthUnit> {
+        &self.units
+    }
+    fn get_list_mut(&mut self) -> &mut Vec<&'static LengthUnit> {
+        &mut self.units
     }
 }
