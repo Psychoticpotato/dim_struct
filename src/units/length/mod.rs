@@ -20,6 +20,14 @@ pub struct LengthUnit {
 }
 // Implement the UnitTrait
 impl UnitTrait for LengthUnit {
+    fn new(abbr: &'static str,singular: &'static str,plural: &'static str, in_base: Float) -> Self {
+        LengthUnit{
+            abbr,
+            singular,
+            plural,
+            in_metre: in_base
+        }
+    }
     fn get_abbr(&self) -> &'static str {
         self.abbr
     }

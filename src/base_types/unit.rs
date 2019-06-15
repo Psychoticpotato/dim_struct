@@ -2,6 +2,8 @@ use crate::common::serial::SERIAL_REGEX;
 use crate::common::Float;
 /// The trait from which all units must derive
 pub trait UnitTrait: Sized + PartialEq {
+    /// Generate a new UnitTrait
+    fn new(abbr: &'static str,singular: &'static str,plural: &'static str, in_base: Float) -> Self;
     /// The abbreviation for this unit
     fn get_abbr(&self) -> &'static str;
     /// Full name of this unit (singular)
